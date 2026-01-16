@@ -1,0 +1,15 @@
+{
+    "editor.defaultFormatter": "golang.go",
+    "go.formatTool": "gofmt",
+    "go.useLanguageServer": true,
+    "go.lintOnSave": "package",
+    "[go]": {
+        "editor.defaultFormatter": "golang.go",
+        "editor.formatOnSave": true,
+        "editor.formatOnSaveMode": "file",
+        "editor.formatOnPaste": true,
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "explicit"
+        }
+    },
+}
