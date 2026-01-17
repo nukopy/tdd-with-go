@@ -1,0 +1,76 @@
+name: CI
+
+on:
+    # Validate on push for Renovate auto merge without PR
+    push:
+        branches:
+            - "master"
+            - "renovate/**"
+    pull_request:
+
+jobs:
+    build:
+        name: Build
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+            - uses: actions/setup-go@v6
+              with:
+                  go-version-file: "./go.mod"
+            - run: go mod download
+            - run: make tdd-with-go
+            - uses: actions/upload-artifact@v6
+              with:
+                  # ref: https://github.com/actions/upload-artifact
+                  name: tdd-with-go
+                  path: ./tdd-with-go
+                  if-no-files-found: error
+                  retention-days: 3
+                  compression-level: "6"
+                  overwrite: true
+                  include-hidden-files: false
+    lint-and-format:
+        name: Lint and Format
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v6
+            - uses: actions/setup-go@v6
+              with:
+                  go-version-file: "./go.mod"
+            - name: golangci-lint
+              uses: golangci/golangci-lint-action@v9
+              with:
+                  version: latest
+                  args: "--timeout 10m0s"
+    test:
+        name: Test
+        runs-on: ubuntu-latest
+        needs: [build]
+        steps:
+            - uses: actions/checkout@v6
+            - uses: actions/setup-go@v6
+              with:
+                  go-version-file: "./go.mod"
+            - name: Run tests
+              run: |
+                  make test-with-coverage
+            - name: Upload test coverage data to Codecov
+              uses: codecov/codecov-action@v5
+              with:
+                  files: ./coverage.txt
+                  token: ${{ secrets.CODECOV_TOKEN }}
+    run:
+        name: Run
+        runs-on: ubuntu-latest
+        needs: [build]
+        steps:
+            - uses: actions/checkout@v6
+            - uses: actions/download-artifact@v7
+              with:
+                  name: tdd-with-go
+            # - uses: k1low/setup-tbls@v1
+            #   with:
+            #       version: v1.65.3
+            - run: |
+                  chmod +x ./tdd-with-go
+                  ./tdd-with-go
