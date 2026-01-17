@@ -1,5 +1,13 @@
 # TDD with Go
 
+[![CI][github-actions-badge]][github-actions-url]
+[![codecov][codecov-badge]][codecov-url]
+
+[github-actions-badge]: https://github.com/nukopy/tdd-with-go/actions/workflows/ci.yml/badge.svg
+[github-actions-url]: https://github.com/nukopy/tdd-with-go/actions/workflows/ci.yml
+[codecov-badge]: https://codecov.io/github/nukopy/tdd-with-go/graph/badge.svg?token=x92k8kBb3t
+[codecov-url]: https://codecov.io/github/nukopy/tdd-with-go
+
 DO [Learn Go with tests](https://quii.gitbook.io/learn-go-with-tests)
 
 ## Environments
