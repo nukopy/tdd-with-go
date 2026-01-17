@@ -35,6 +35,10 @@ golangci-lint: ## Lint and check format go files
 lint-and-fmt: ## Lint and format go files
 	-@make golangci-lint
 
+.PHONY: lint
+lint: ## (alias: lint-and-fmt) Lint and format go files
+	-@make lint-and-fmt
+
 .PHONY: test
 test: ## Run test
 	go test ./... -race -shuffle=on -vet=off
