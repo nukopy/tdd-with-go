@@ -10,8 +10,9 @@ DO [Learn Go with tests](https://quii.gitbook.io/learn-go-with-tests)
 
 ## Setup
 
+- Installation of golangci-lint
+
 ```sh
-# Install golangci-lint
 curl -sSfL https://golangci-lint.run/install.sh | sh -s -- -b $(go env GOPATH)/bin v2.8.0
 ```
 
